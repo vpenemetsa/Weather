@@ -9,4 +9,12 @@ public class Precipitation {
 
     @SerializedName("3h")
     private String threeHours;
+
+    public String getThreeHours() {
+        return threeHours;
+    }
+
+    public void setThreeHours(String threeHours) {
+        this.threeHours = threeHours;
+    }
 }

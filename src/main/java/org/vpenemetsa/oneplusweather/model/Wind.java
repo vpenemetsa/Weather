@@ -11,4 +11,20 @@ public class Wind {
 
     @SerializedName("deg")
     private long direction;
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public long getDirection() {
+        return direction;
+    }
+
+    public void setDirection(long direction) {
+        this.direction = direction;
+    }
 }

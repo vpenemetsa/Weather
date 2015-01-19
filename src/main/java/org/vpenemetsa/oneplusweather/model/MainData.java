@@ -19,5 +19,43 @@ public class MainData {
 
     private long humidity;
 
+    public double getTemp() {
+        return temp;
+    }
 
+    public void setTemp(double temp) {
+        this.temp = temp;
+    }
+
+    public double getMinTemp() {
+        return minTemp;
+    }
+
+    public void setMinTemp(double minTemp) {
+        this.minTemp = minTemp;
+    }
+
+    public double getMaxTemp() {
+        return maxTemp;
+    }
+
+    public void setMaxTemp(double maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(double pressure) {
+        this.pressure = pressure;
+    }
+
+    public long getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(long humidity) {
+        this.humidity = humidity;
+    }
 }
