@@ -77,17 +77,17 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             if (weatherType.equals("Clouds")) {
                 value = random.nextInt(6) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.clouds1).into(imageView);
+                    mPicasso.load(R.drawable.clouds1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.clouds2).into(imageView);
+                    mPicasso.load(R.drawable.clouds2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.clouds3).into(imageView);
+                    mPicasso.load(R.drawable.clouds3).fit().into(imageView);
                 } else if (value == 4) {
-                    mPicasso.load(R.drawable.clouds4).into(imageView);
+                    mPicasso.load(R.drawable.clouds4).fit().into(imageView);
                 } else if (value == 5) {
-                    mPicasso.load(R.drawable.clouds5).into(imageView);
+                    mPicasso.load(R.drawable.clouds5).fit().into(imageView);
                 } else if (value == 6) {
-                    mPicasso.load(R.drawable.clouds6).into(imageView);
+                    mPicasso.load(R.drawable.clouds6).fit().into(imageView);
                 }
 
             } else if (weatherType.equals("Clear")) {
@@ -102,54 +102,54 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             } else if (weatherType.equals("Rain") || weatherType.equals("Drizzle")) {
                 value = random.nextInt(3) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.rain1).into(imageView);
+                    mPicasso.load(R.drawable.rain1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.rain2).into(imageView);
+                    mPicasso.load(R.drawable.rain2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.rain3).into(imageView);
+                    mPicasso.load(R.drawable.rain3).fit().into(imageView);
                 }
             } else if (weatherType.equals("Fog") || weatherType.equals("Mist")) {
                 value = random.nextInt(3) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.fog1).into(imageView);
+                    mPicasso.load(R.drawable.fog1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.fog2).into(imageView);
+                    mPicasso.load(R.drawable.fog2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.fog3).into(imageView);
+                    mPicasso.load(R.drawable.fog3).fit().into(imageView);
                 }
             } else if (weatherType.equals("Haze")) {
                 value = random.nextInt(3) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.haze1).into(imageView);
+                    mPicasso.load(R.drawable.haze1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.haze2).into(imageView);
+                    mPicasso.load(R.drawable.haze2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.haze3).into(imageView);
+                    mPicasso.load(R.drawable.haze3).fit().into(imageView);
                 }
             } else if (weatherType.equals("Thunderstorm")) {
                 value = random.nextInt(3) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.thunderstorm1).into(imageView);
+                    mPicasso.load(R.drawable.thunderstorm1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.thunderstorm2).into(imageView);
+                    mPicasso.load(R.drawable.thunderstorm2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.thunderstorm3).into(imageView);
+                    mPicasso.load(R.drawable.thunderstorm3).fit().into(imageView);
                 }
             } else if (weatherType.equals("Snow")) {
                 value = random.nextInt(3) + 1;
                 if (value == 1) {
-                    mPicasso.load(R.drawable.snow1).into(imageView);
+                    mPicasso.load(R.drawable.snow1).fit().into(imageView);
                 } else if (value == 2) {
-                    mPicasso.load(R.drawable.snow2).into(imageView);
+                    mPicasso.load(R.drawable.snow2).fit().into(imageView);
                 } else if (value == 3) {
-                    mPicasso.load(R.drawable.snow3).into(imageView);
+                    mPicasso.load(R.drawable.snow3).fit().into(imageView);
                 }
             } else if (weatherType.equals("Smoke")) {
-                mPicasso.load(R.drawable.smoke).into(imageView);
+                mPicasso.load(R.drawable.smoke).fit().into(imageView);
             } else if (weatherType.equals("Sand")) {
-                mPicasso.load(R.drawable.sand).into(imageView);
+                mPicasso.load(R.drawable.sand).fit().into(imageView);
             } else if (weatherType.equals("Dust")) {
-                mPicasso.load(R.drawable.dust).into(imageView);
+                mPicasso.load(R.drawable.dust).fit().into(imageView);
             }
         }
     }
