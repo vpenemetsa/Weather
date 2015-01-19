@@ -9,4 +9,6 @@ public class Constants {
     public static final String OPEN_WEATHER_API_ENDPOINT = "http://api.openweathermap.org";
 
     public static final String OPEN_WEATHER_ICON_ENDPOINT = "http://openweathermap.org/img/w/";
+
+    public static final String PARCEL_LOCATIONS = "PARCEL_LOCATIONS";
 }

@@ -68,7 +68,7 @@ public class ListActivity extends ActionBarActivity implements
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-        mAdapter = new LocationAdapter(getApplicationContext(),
+        mAdapter = new LocationAdapter(this,
                 mSavedLocations.getAllWeatherResponses(), mSavedLocations);
         mRecyclerView.setAdapter(mAdapter);
 

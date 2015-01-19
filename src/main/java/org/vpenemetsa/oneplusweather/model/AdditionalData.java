@@ -1,9 +1,12 @@
 package org.vpenemetsa.oneplusweather.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by vijaypenemetsa on 1/19/15.
  */
-public class AdditionalData {
+public class AdditionalData implements Parcelable {
 
     private String country;
 
@@ -34,4 +37,35 @@ public class AdditionalData {
     public void setSunset(long sunset) {
         this.sunset = sunset;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(country);
+        parcel.writeLong(sunrise);
+        parcel.writeLong(sunset);
+    }
+
+    public AdditionalData() {
+    }
+
+    public AdditionalData(Parcel in) {
+        country = in.readString();
+        sunrise = in.readLong();
+        sunset = in.readLong();
+    }
+
+    public static final Parcelable.Creator<AdditionalData> CREATOR = new Parcelable.Creator<AdditionalData>() {
+        public AdditionalData createFromParcel(Parcel in) {
+            return new AdditionalData(in);
+        }
+
+        public AdditionalData[] newArray(int size) {
+            return new AdditionalData[size];
+        }
+    };
 }

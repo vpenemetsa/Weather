@@ -1,5 +1,8 @@
 package org.vpenemetsa.oneplusweather.responses;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.vpenemetsa.oneplusweather.model.AdditionalData;
@@ -10,12 +13,13 @@ import org.vpenemetsa.oneplusweather.model.Snow;
 import org.vpenemetsa.oneplusweather.model.Weather;
 import org.vpenemetsa.oneplusweather.model.Wind;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vijaypenemetsa on 1/19/15.
  */
-public class WeatherResponse {
+public class WeatherResponse implements Parcelable {
 
     private List<Weather> weather;
 
@@ -118,4 +122,49 @@ public class WeatherResponse {
     public void setCod(long cod) {
         this.cod = cod;
     }
+
+    public WeatherResponse(){};
+
+    protected WeatherResponse(Parcel in) {
+        weather = new ArrayList<Weather>();
+        in.readList(weather, Weather.class.getClassLoader());
+        additionalData = in.readParcelable(AdditionalData.class.getClassLoader());
+        main = in.readParcelable(MainData.class.getClassLoader());
+        wind = in.readParcelable(Wind.class.getClassLoader());
+        rain = in.readParcelable(Rain.class.getClassLoader());
+        snow = in.readParcelable(Snow.class.getClassLoader());
+        clouds = in.readParcelable(Clouds.class.getClassLoader());
+        date = in.readString();
+        name = in.readString();
+        cod = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeList(weather);
+        parcel.writeParcelable(additionalData, i);
+        parcel.writeParcelable(main, i);
+        parcel.writeParcelable(wind, i);
+        parcel.writeParcelable(rain, i);
+        parcel.writeParcelable(snow, i);
+        parcel.writeParcelable(clouds, i);
+        parcel.writeString(date);
+        parcel.writeString(name);
+        parcel.writeLong(cod);
+    }
+
+    public static final Parcelable.Creator<WeatherResponse> CREATOR = new Parcelable.Creator<WeatherResponse>() {
+        public WeatherResponse createFromParcel(Parcel in) {
+            return new WeatherResponse(in);
+        }
+
+        public WeatherResponse[] newArray(int size) {
+            return new WeatherResponse[size];
+        }
+    };
 }

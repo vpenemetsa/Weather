@@ -1,6 +1,8 @@
 package org.vpenemetsa.oneplusweather.adapters;
 
-import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +16,12 @@ import com.squareup.picasso.Picasso;
 import org.vpenemetsa.oneplusweather.Constants;
 import org.vpenemetsa.oneplusweather.R;
 import org.vpenemetsa.oneplusweather.SavedLocations;
+import org.vpenemetsa.oneplusweather.activities.DetailActivity;
+import org.vpenemetsa.oneplusweather.activities.ListActivity;
 import org.vpenemetsa.oneplusweather.model.Weather;
 import org.vpenemetsa.oneplusweather.responses.WeatherResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,14 +30,19 @@ import java.util.Random;
  */
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
-    private List<WeatherResponse> locations;
+    private ArrayList<WeatherResponse> locations;
     private Picasso mPicasso;
     private SavedLocations mSavedLocations;
 
-    public LocationAdapter(Context context, List<WeatherResponse> locations, SavedLocations savedLocations) {
-        this.locations = locations;
+    private String mTransitionName;
+    private ListActivity mContext;
+
+    public LocationAdapter(ListActivity context, List<WeatherResponse> locations, SavedLocations savedLocations) {
+        this.locations = new ArrayList<>(locations);
         mPicasso = Picasso.with(context);
         mSavedLocations = savedLocations;
+        mTransitionName = context.getString(R.string.transition_weather_image);
+        mContext = context;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -41,6 +51,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         protected TextView tvLocationName;
         protected TextView tvLocationTemp;
         protected ImageView ivWeatherIcon;
+        protected CardView cvLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -48,6 +59,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             tvLocationName = (TextView) itemView.findViewById(R.id.location_name);
             tvLocationTemp = (TextView) itemView.findViewById(R.id.location_temp);
             ivWeatherIcon = (ImageView) itemView.findViewById(R.id.location_weather_icon);
+            cvLayout = (CardView) itemView.findViewById(R.id.card_view);
         }
     }
 
@@ -58,7 +70,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(LocationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final LocationAdapter.ViewHolder holder, int position) {
         WeatherResponse location = locations.get(position);
         if (location != null) {
             holder.tvLocationTemp.setText("" + location.getMain().getTemp());
@@ -72,7 +84,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
                         .into(holder.ivWeatherIcon);
             }
 
-
+            holder.cvLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext.getApplicationContext(), DetailActivity.class);
+                    intent.putParcelableArrayListExtra(Constants.PARCEL_LOCATIONS, locations);
+                    ActivityCompat.startActivity(mContext, intent, null);
+                }
+            });
         }
     }
 
