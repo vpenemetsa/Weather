@@ -25,6 +25,7 @@ public class ApiManager {
 
         Map<String, String> params = new HashMap<>();
         params.put("q", id);
+        params.put("units", "imperial");
 
         OpenWeatherService.CurrentWeather weatherService =
                 getAdapter().create(OpenWeatherService.CurrentWeather.class);
@@ -35,6 +36,7 @@ public class ApiManager {
         Map<String, String> params = new HashMap<>();
         params.put("lat", lat);
         params.put("lon", lon);
+        params.put("units", "imperial");
 
         OpenWeatherService.CurrentWeather weatherService =
                 getAdapter().create(OpenWeatherService.CurrentWeather.class);
@@ -50,6 +52,7 @@ public class ApiManager {
 
         Map<String, String> params = new HashMap<>();
         params.put("id", builder.toString());
+        params.put("units", "imperial");
 
         OpenWeatherService.WeatherForGroup weatherService =
                 getAdapter().create(OpenWeatherService.WeatherForGroup.class);

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -51,8 +52,12 @@ public class ListActivity extends ActionBarActivity implements
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new LocationAdapter(mSavedLocations.getStoredWeatherResponses());
+        mAdapter = new LocationAdapter(getApplicationContext(),
+                mSavedLocations.getStoredWeatherResponses());
         mRecyclerView.setAdapter(mAdapter);
+
+        FloatingActionButton addLocationButton =
+                (FloatingActionButton) findViewById(R.id.add_location);
 
         buildGoogleApiClient();
 
@@ -138,9 +143,8 @@ public class ListActivity extends ActionBarActivity implements
 
         Log.d("******************", weatherResponse.getName());
 
-//        locations.add(location);
         if (mAdapter != null) {
-            mAdapter.add(weatherResponse);
+            mAdapter.replace(weatherResponse, 0);
         }
     }
 }

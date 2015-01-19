@@ -6,6 +6,4 @@
 
     </style>
 
-    <style name="cardTitle" parent="android:TextAppearance.Material.Headline" />
-
 </resources>
