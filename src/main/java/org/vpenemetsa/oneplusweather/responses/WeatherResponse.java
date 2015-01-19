@@ -37,6 +37,8 @@ public class WeatherResponse {
 
     private String name;
 
+    private long cod;
+
     public List<Weather> getWeather() {
         return weather;
     }
@@ -107,5 +109,13 @@ public class WeatherResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getCod() {
+        return cod;
+    }
+
+    public void setCod(long cod) {
+        this.cod = cod;
     }
 }

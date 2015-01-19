@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import org.vpenemetsa.oneplusweather.Constants;
 import org.vpenemetsa.oneplusweather.R;
+import org.vpenemetsa.oneplusweather.SavedLocations;
 import org.vpenemetsa.oneplusweather.model.Weather;
 import org.vpenemetsa.oneplusweather.responses.WeatherResponse;
 
@@ -26,10 +27,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
     private List<WeatherResponse> locations;
     private Picasso mPicasso;
+    private SavedLocations mSavedLocations;
 
-    public LocationAdapter(Context context, List<WeatherResponse> locations) {
+    public LocationAdapter(Context context, List<WeatherResponse> locations, SavedLocations savedLocations) {
         this.locations = locations;
         mPicasso = Picasso.with(context);
+        mSavedLocations = savedLocations;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,15 +60,19 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public void onBindViewHolder(LocationAdapter.ViewHolder holder, int position) {
         WeatherResponse location = locations.get(position);
-        holder.tvLocationTemp.setText("" + location.getMain().getTemp());
-        holder.tvLocationName.setText(location.getName() + ", " + location.getAdditionalData().getCountry());
+        if (location != null) {
+            holder.tvLocationTemp.setText("" + location.getMain().getTemp());
+            holder.tvLocationName.setText(location.getName() + ", " + location.getAdditionalData().getCountry());
 
-        Weather currentWeather = location.getWeather().get(0);
-        if (currentWeather != null) {
-            loadImageResource(holder.ivLocation, currentWeather);
-            mPicasso.load(Constants.OPEN_WEATHER_ICON_ENDPOINT + currentWeather.getIcon() + ".png")
-                    .resize(96, 96)
-                    .into(holder.ivWeatherIcon);
+            Weather currentWeather = location.getWeather().get(0);
+            if (currentWeather != null) {
+                loadImageResource(holder.ivLocation, currentWeather);
+                mPicasso.load(Constants.OPEN_WEATHER_ICON_ENDPOINT + currentWeather.getIcon() + ".png")
+                        .resize(96, 96)
+                        .into(holder.ivWeatherIcon);
+            }
+
+
         }
     }
 
@@ -162,24 +169,27 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     public void add(WeatherResponse location, int position) {
         locations.add(position, location);
         notifyItemInserted(position);
+        notifyDataSetChanged();
     }
 
     public void add(WeatherResponse location) {
         locations.add(location);
         Log.i("****************", "Item inserted at " + getItemCount());
         notifyItemInserted(getItemCount() - 1);
-    }
-
-    public void add(List<WeatherResponse> locations) {
-        locations.addAll(locations);
         notifyDataSetChanged();
     }
 
     public void replace(WeatherResponse location, int position) {
-        if (getItemCount() > 0) {
-            locations.remove(position);
-        }
+        locations.remove(position);
+        locations.add(position, location);
+        notifyItemChanged(position);
+        notifyDataSetChanged();
+    }
 
-        add(location, position);
+    public void remove(int position) {
+        locations.remove(position);
+        notifyItemRemoved(position);
+        mSavedLocations.saveLocationsFromAdapter(locations);
+        notifyDataSetChanged();
     }
 }

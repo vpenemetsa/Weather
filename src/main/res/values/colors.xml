@@ -3,5 +3,6 @@
     
     <color name="red">#e51c23</color>
     <color name="red_pressed">#a21318</color>
-    
+
+    <color name="light_teal">#ded297</color>
 </resources>

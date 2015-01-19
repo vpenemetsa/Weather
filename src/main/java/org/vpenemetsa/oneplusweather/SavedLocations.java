@@ -24,8 +24,11 @@ public class SavedLocations {
     private Gson mGson;
 
     private static final String WEATHER_RESPONSES_JSON = "WEATHER_RESPONSES_JSON";
+    private static final String CURRENT_WEATHER_RESPONSE_JSON = "CURRENT_WEATHER_RESPONSE_JSON";
 
     private List<WeatherResponse> mWeatherResponses = new ArrayList<>();
+
+    private WeatherResponse mCurrentLocationWeather;
 
     public static SavedLocations getInstance(Context context) {
         if (mSavedLocations == null) {
@@ -50,13 +53,29 @@ public class SavedLocations {
             }
         }
 
+        String weatherResponseJson = mSharedPrefs.getString(CURRENT_WEATHER_RESPONSE_JSON, null);
+        if (weatherResponseJson != null) {
+            mCurrentLocationWeather = mGson.fromJson(weatherResponseJson, WeatherResponse.class);
+        }
+    }
+
+    public void saveCurrentLocation(WeatherResponse weatherResponse) {
+        String weatherResponseJson = mGson.toJson(weatherResponse);
+        mSharedPrefs.edit().putString(CURRENT_WEATHER_RESPONSE_JSON, weatherResponseJson);
+        mCurrentLocationWeather = weatherResponse;
+    }
+
+    public WeatherResponse getCurrentLocationWeather() {
+        return mCurrentLocationWeather;
     }
 
     public void saveLocation(WeatherResponse weatherResponse) {
         String weatherResponseJson = mGson.toJson(weatherResponse);
         Set<String> storedLocations = getStoredLocationsSet();
+        clearStoredLocationSet();
         storedLocations.add(weatherResponseJson);
         mSharedPrefs.edit().putStringSet(WEATHER_RESPONSES_JSON, storedLocations).commit();
+        loadData();
     }
 
     public void saveLocations(List<WeatherResponse> weatherResponses) {
@@ -64,14 +83,37 @@ public class SavedLocations {
         for (WeatherResponse weatherResponse : weatherResponses) {
             storedLocations.add(mGson.toJson(weatherResponse));
         }
+        clearStoredLocationSet();
         mSharedPrefs.edit().putStringSet(WEATHER_RESPONSES_JSON, storedLocations).commit();
+        loadData();
+    }
+
+    public void saveLocationsFromAdapter(List<WeatherResponse> weatherResponses) {
+        saveCurrentLocation(weatherResponses.get(0));
+        List<WeatherResponse> storedWeatherResponses = new ArrayList<>();
+        for (int i = 1; i < weatherResponses.size(); i++) {
+            storedWeatherResponses.add(weatherResponses.get(i));
+        }
+        saveLocations(storedWeatherResponses);
     }
 
     private Set<String> getStoredLocationsSet() {
-        return mSharedPrefs.getStringSet(WEATHER_RESPONSES_JSON, null);
+        return mSharedPrefs.getStringSet(WEATHER_RESPONSES_JSON, new HashSet<String>());
+    }
+
+    private void clearStoredLocationSet() {
+        mSharedPrefs.edit().remove(WEATHER_RESPONSES_JSON).commit();
     }
 
     public List<WeatherResponse> getStoredWeatherResponses() {
-       return mWeatherResponses;
+        return mWeatherResponses;
+    }
+
+    public List<WeatherResponse> getAllWeatherResponses() {
+        List<WeatherResponse> weatherResponses = new ArrayList<>();
+        weatherResponses.add(getCurrentLocationWeather());
+        weatherResponses.addAll(getStoredWeatherResponses());
+
+        return weatherResponses;
     }
 }
