@@ -22,34 +22,31 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_below="@+id/location_image"
-            android:paddingLeft="6dp"
+            android:paddingLeft="4dp"
             android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/description"
+            android:layout_below="@+id/location_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:paddingLeft="4dp"
+            android:paddingBottom="16dp"/>
 
         <View
             android:id="@+id/divider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/location_name"
+            android:layout_below="@+id/description"
             android:layout_marginBottom="4dp"
             android:background="@color/red" />
-
-        <TextView
-            android:id="@+id/text_temperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:fontFamily="sans-serif"
-            android:textSize="16sp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/divider1"
-            android:paddingBottom="4dp"
-            android:text="Temperatures"/>
 
         <LinearLayout
             android:id="@+id/layout_temperatures"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_temperature"
+            android:layout_below="@+id/divider1"
             android:orientation="horizontal"
             android:layout_marginBottom="4dp"
             android:weightSum="3">
@@ -65,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Current"
+                    android:text="Temperature"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
 
@@ -92,19 +89,19 @@
                 android:padding="2dp">
 
                 <TextView
-                    android:id="@+id/text_max"
+                    android:id="@+id/text_humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Max"
+                    android:text="Humidity"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
 
                 <TextView
-                    android:id="@+id/max_temperature"
+                    android:id="@+id/humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_max"
+                    android:layout_below="@+id/text_humidity"
                     android:fontFamily="sans-serif-thin"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
@@ -123,19 +120,19 @@
                 android:padding="2dp">
 
                 <TextView
-                    android:id="@+id/text_min"
+                    android:id="@+id/text_pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Min"
+                    android:text="Pressure"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
 
                 <TextView
-                    android:id="@+id/min_temperature"
+                    android:id="@+id/pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_min"
+                    android:layout_below="@+id/text_pressure"
                     android:fontFamily="sans-serif-thin"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
@@ -213,6 +210,83 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_sunset"
+                    android:fontFamily="sans-serif-thin"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout_sun"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/red" />
+
+        <LinearLayout
+            android:id="@+id/layout_precipitation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider3"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/text_rain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Rain"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/rain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_rain"
+                    android:fontFamily="sans-serif-thin"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/red" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/text_snow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Snow"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/snow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_snow"
                     android:fontFamily="sans-serif-thin"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_centerHorizontal="true"/>
