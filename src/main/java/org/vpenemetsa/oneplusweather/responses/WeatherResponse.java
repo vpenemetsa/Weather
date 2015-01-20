@@ -43,6 +43,8 @@ public class WeatherResponse implements Parcelable {
 
     private long cod;
 
+    private String id;
+
     public List<Weather> getWeather() {
         return weather;
     }
@@ -123,10 +125,18 @@ public class WeatherResponse implements Parcelable {
         this.cod = cod;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public WeatherResponse(){};
 
     protected WeatherResponse(Parcel in) {
-        weather = new ArrayList<Weather>();
+        weather = new ArrayList<>();
         in.readList(weather, Weather.class.getClassLoader());
         additionalData = in.readParcelable(AdditionalData.class.getClassLoader());
         main = in.readParcelable(MainData.class.getClassLoader());

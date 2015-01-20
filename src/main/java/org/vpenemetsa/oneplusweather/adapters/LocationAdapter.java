@@ -18,6 +18,7 @@ import org.vpenemetsa.oneplusweather.R;
 import org.vpenemetsa.oneplusweather.SavedLocations;
 import org.vpenemetsa.oneplusweather.activities.DetailActivity;
 import org.vpenemetsa.oneplusweather.activities.ListActivity;
+import org.vpenemetsa.oneplusweather.api.ApiManager;
 import org.vpenemetsa.oneplusweather.model.Weather;
 import org.vpenemetsa.oneplusweather.responses.WeatherResponse;
 import org.vpenemetsa.oneplusweather.utils.ImageUtils;
@@ -35,14 +36,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     private Picasso mPicasso;
     private SavedLocations mSavedLocations;
 
-    private String mTransitionName;
     private ListActivity mContext;
 
     public LocationAdapter(ListActivity context, List<WeatherResponse> locations, SavedLocations savedLocations) {
         this.locations = new ArrayList<>(locations);
         mPicasso = Picasso.with(context);
         mSavedLocations = savedLocations;
-        mTransitionName = context.getString(R.string.transition_weather_image);
         mContext = context;
     }
 
@@ -126,6 +125,15 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         locations.remove(position);
         notifyItemRemoved(position);
         mSavedLocations.saveLocationsFromAdapter(locations);
+        notifyDataSetChanged();
+    }
+
+    public void updateStoredLocations(List<WeatherResponse> weatherResponses) {
+        for (int i=1; i<locations.size(); i++) {
+            locations.remove(i);
+        }
+
+        locations.addAll(weatherResponses);
         notifyDataSetChanged();
     }
 }

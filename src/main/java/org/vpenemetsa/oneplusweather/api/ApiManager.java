@@ -43,15 +43,9 @@ public class ApiManager {
         weatherService.getCurrentWeather(params, callback);
     }
 
-    public void getCurrentWeather(List<String> ids, Callback<ListWeatherResponse> callback) {
-        StringBuilder builder = new StringBuilder();
-        for (String id : ids) {
-            builder.append(ids + ",");
-        }
-        builder.delete(builder.length() - 2, builder.length());
-
+    public void getCurrentWeatherForGroup(String ids, Callback<ListWeatherResponse> callback) {
         Map<String, String> params = new HashMap<>();
-        params.put("id", builder.toString());
+        params.put("id", ids);
         params.put("units", "imperial");
 
         OpenWeatherService.WeatherForGroup weatherService =

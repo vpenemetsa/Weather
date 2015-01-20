@@ -30,7 +30,11 @@ import org.vpenemetsa.oneplusweather.SavedLocations;
 import org.vpenemetsa.oneplusweather.adapters.LocationAdapter;
 import org.vpenemetsa.oneplusweather.api.ApiManager;
 import org.vpenemetsa.oneplusweather.external.SwipeableRecyclerViewTouchListener;
+import org.vpenemetsa.oneplusweather.responses.ListWeatherResponse;
 import org.vpenemetsa.oneplusweather.responses.WeatherResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -132,6 +136,9 @@ public class ListActivity extends ActionBarActivity implements
         mRecyclerView.addOnItemTouchListener(swipeTouchListener);
 
         buildGoogleApiClient();
+        if (mSavedLocations.getStoredWeatherResponses().size() > 0) {
+            updateStoredLocations(mSavedLocations.getStoredWeatherResponses());
+        }
     }
 
     @Override
@@ -219,6 +226,30 @@ public class ListActivity extends ActionBarActivity implements
             Toast.makeText(getApplicationContext(), "Location not found.",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void updateStoredLocations(final List<WeatherResponse> weatherResponses) {
+        String separator = ",";
+        StringBuilder sb = new StringBuilder();
+        for (WeatherResponse weatherResponse : weatherResponses) {
+            sb.append(separator).append(weatherResponse.getId());
+        }
+
+        String result = sb.substring(separator.length());
+        mApiManager.getCurrentWeatherForGroup(result, new Callback<ListWeatherResponse>() {
+            @Override
+            public void success(ListWeatherResponse listWeatherResponse, Response response) {
+                if (listWeatherResponse != null) {
+                    mAdapter.updateStoredLocations(listWeatherResponse.getList());
+                    mSavedLocations.saveLocations(listWeatherResponse.getList());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("*******************", error.toString());
+            }
+        });
     }
 
     private void addLocation(String location) {
